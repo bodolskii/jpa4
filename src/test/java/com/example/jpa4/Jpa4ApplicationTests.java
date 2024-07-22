@@ -10,4 +10,5 @@ class Jpa4ApplicationTests {
     void contextLoads() {
     }
 
+
 }
