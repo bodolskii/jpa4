@@ -19,7 +19,7 @@ class StudyRecordRepositoryTest {
     public void testSelectAll() {
         List<Study_record> list = repo.findAll();
 
-        for (Study_record  record :  list) {
+        for(Study_record  record :  list) {
             System.out.println(record.getId());
             System.out.println(record.getCONTENTS());
             System.out.println(record.getReg_day());

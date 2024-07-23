@@ -21,7 +21,8 @@ import java.time.LocalDateTime;
 public class Study_record {
 
     @jakarta.persistence.Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String STUDY_DAY;
 
