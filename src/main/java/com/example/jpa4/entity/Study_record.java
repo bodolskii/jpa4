@@ -31,5 +31,8 @@ public class Study_record {
     private LocalDateTime reg_day;
 
 
+    private LocalDateTime mod_day;
+
+
 
 }

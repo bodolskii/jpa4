@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ public class Con_study {
     @Autowired
     StudyRecordService recordService;
 
+
     @GetMapping("/List")
     public String doStudyList(Model model) {
         List<Study_record> list = recordService.doSelectAll();
@@ -31,7 +33,7 @@ public class Con_study {
         return "/study/study_list";
 
     }
-
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/insert")
     public String doInsertStudy() {
         return "/study/study_insert";
@@ -51,5 +53,12 @@ public class Con_study {
         model.addAttribute("study_record",study_record);
         return "study/study_modify";
 
+    }
+
+    @PostMapping("/modify_exe")
+    public String doModifyStudy(@ModelAttribute Study_record record) {
+        record.setMod_day(LocalDateTime.now());
+        recordService.doUpdate(record);
+        return "redirect:/study/List";
     }
 }
