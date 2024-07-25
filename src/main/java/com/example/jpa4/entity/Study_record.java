@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 public class Study_record {
 
     @jakarta.persistence.Id
@@ -29,7 +28,6 @@ public class Study_record {
     private String CONTENTS;
 
     private LocalDateTime reg_day;
-
 
     private LocalDateTime mod_day;
 
