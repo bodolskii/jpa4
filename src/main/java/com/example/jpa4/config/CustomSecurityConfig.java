@@ -3,6 +3,7 @@ package com.example.jpa4.config;
 import com.example.jpa4.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +23,13 @@ import javax.sql.DataSource;
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class CustomSecurityConfig {
+public class CustomSecurityConfig{
     //주입필요
-    private final DataSource dataSource;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final   DataSource dataSource;
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
 
 
 
@@ -39,6 +43,7 @@ public class CustomSecurityConfig {
 
         });
         httpSecurity.csrf(csrf -> csrf.disable());
+
 
         httpSecurity.rememberMe(remember -> remember
                 .key("12345678")

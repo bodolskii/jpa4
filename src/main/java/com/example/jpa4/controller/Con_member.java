@@ -5,6 +5,7 @@ import com.example.jpa4.service.StudyMemberService;
 import jakarta.annotation.security.PermitAll;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @Log4j2
 @RequestMapping("/member")
 public class Con_member {
+
 
     @Autowired
     StudyMemberService studyMemberService;

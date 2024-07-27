@@ -22,7 +22,7 @@ public class Study_member {
     @Column(name = "MEMBER_ID")
     private int memberId;
 
-    @Column(name = "LOGIN_ID")
+    @Column(name = "login_id")
     private String loginId;
 
     private String password;

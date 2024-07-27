@@ -25,7 +25,7 @@ public class Con_study {
     StudyRecordService recordService;
 
 
-    @GetMapping("/List")
+    @GetMapping("/list")
     public String doStudyList(Model model) {
         List<Study_record> list = recordService.doSelectAll();
 
@@ -33,7 +33,7 @@ public class Con_study {
         return "/study/study_list";
 
     }
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/insert")
     public String doInsertStudy() {
         return "/study/study_insert";
@@ -43,7 +43,7 @@ public class Con_study {
     public String doInsertStudy(@ModelAttribute Study_record record  ) {
         record.setReg_day(LocalDateTime.now());
         recordService.doInsert(record);
-        return "redirect:/study/List";
+        return "redirect:/study/list";
 
     }
 
@@ -59,6 +59,6 @@ public class Con_study {
     public String doModifyStudy(@ModelAttribute Study_record record) {
         record.setMod_day(LocalDateTime.now());
         recordService.doUpdate(record);
-        return "redirect:/study/List";
+        return "redirect:/study/list";
     }
 }
