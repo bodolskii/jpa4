@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center py-3 mb-4 border-bottom">
         <ul class="nav nav-pills">
@@ -10,10 +11,12 @@
         </ul>
 
         <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/login/login'" >Login</button>
+            <!-- 로그인 상태가 아닐 때 로그인 및 회원가입 버튼 표시 -->
+            <button type="button" class="btn btn-outline-primary me-2" th:if="${principal == null}" onclick="location.href='/login/login'">로그인</button>
+            <button type="button" class="btn btn-primary" th:if="${principal == null}" onclick="location.href='/member/insert'">회원가입</button>
 
-            <button type="button" class="btn btn-primary" onclick="location.href='/member/insert'">Sign-up</button>
-
+            <!-- 로그인 상태일 때 로그아웃 버튼 표시 -->
+            <button type="button" class="btn btn-outline-secondary" th:if="${principal != null}" onclick="location.href='/logout'">로그아웃</button>
         </div>
     </header>
 </div>

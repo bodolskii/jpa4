@@ -23,37 +23,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/login")
 public class Con_login {
 
-    @Autowired
-    StudyMemberService studyMemberService;
+    private final   StudyMemberService studyMemberService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
-    @PermitAll
+    private final PasswordEncoder passwordEncoder;
+
+
     @GetMapping("/login")
     public String login( ) {
         return "/login/login";
     }
 
-    @PermitAll
-    @PostMapping("/login_exe")
-    public String login_exe(String loginId, String password, Model model, HttpSession session) {
-        log.info(loginId+"loginId ====================");
-        Study_member studyMember = studyMemberService.findAllByLoginId(loginId);
-        log.info(studyMember+"studyMember ====================");
 
 
-//        String passcode = passwordEncoder.encode(password);
-//        log.info(passcode+"passcode ====================" + studyMember.getPassword());
-
-
-        if(passwordEncoder.matches(password, studyMember.getPassword())) {
-            session.setAttribute("studyMember", studyMember);
-            return "redirect:/study/list";
-        }else {
-            model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            return "redirect:/login/login";
-        }
-
-    }
 }

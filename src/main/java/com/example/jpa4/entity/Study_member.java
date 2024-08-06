@@ -19,10 +19,10 @@ public class Study_member {
 
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MEMBER_ID")
+    @Column(name = "id")
     private int memberId;
 
-    @Column(name = "login_id")
+    @Column(name = "userid")
     private String loginId;
 
     private String password;

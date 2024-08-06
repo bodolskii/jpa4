@@ -33,7 +33,7 @@ public class Con_study {
         return "/study/study_list";
 
     }
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+
     @GetMapping("/insert")
     public String doInsertStudy() {
         return "/study/study_insert";

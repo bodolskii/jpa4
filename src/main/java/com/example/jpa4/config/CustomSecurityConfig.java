@@ -10,49 +10,59 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-
 import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
-@EnableMethodSecurity
+@EnableWebSecurity
 @RequiredArgsConstructor
-public class CustomSecurityConfig{
+public class CustomSecurityConfig {
+
+
     //주입필요
     private final   DataSource dataSource;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
 
 
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        log.info("--configure");
-        httpSecurity.formLogin(config -> {
-            config
-                    .loginPage("/login/login")
-                    .defaultSuccessUrl("/home");
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        });
-        httpSecurity.csrf(csrf -> csrf.disable());
-
-
-        httpSecurity.rememberMe(remember -> remember
-                .key("12345678")
+        log.info("~~~~~~~~~~~~~~~~~~~~~config securityFilterChain~``````````````");
+        http.authorizeHttpRequests(authorize -> {
+                    authorize
+                            .requestMatchers("/login/**", "/member/**", "/study/list").permitAll()
+                            .requestMatchers("/study/insert").hasRole("MEMBER")
+                            .anyRequest().authenticated();
+                }
+        );
+        http.formLogin(formLogin -> formLogin
+                .loginPage("/login/login")
+                .defaultSuccessUrl("/login/login", true)
+                .permitAll()
+        );
+        http.logout(LogoutConfigurer::permitAll
+        );
+        log.info("99999999999999999999");
+        http.rememberMe(rememberMe -> rememberMe
+                .key("123456789")
                 .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(60 * 60 * 24 * 30) //30일
-                .userDetailsService(customUserDetailsService));
-
-
-        return httpSecurity.build();
+                .userDetailsService(customUserDetailsService)
+                .tokenValiditySeconds(60 * 60 * 24 * 30)
+        );
+        return http.build();
     }
 
     @Bean

@@ -22,7 +22,6 @@ public class Con_member {
     StudyMemberService studyMemberService;
 
     //전체멤버조회
-    @PermitAll
     @GetMapping("/list")
     public String doMemberList(Model model)throws Exception {
 
@@ -32,7 +31,6 @@ public class Con_member {
     }
 
     //멤버추가
-    @PermitAll
     @GetMapping("/insert")
     public String doIns() {
         return "/member/member_join";
